@@ -875,7 +875,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge label="Tier 2 POC" color="blue" />
+            <Badge label="AfyaLink-Ready" color="blue" />
             <Badge label="FHIR R4" color="green" />
             <button
               onClick={() => setShowBatch(!showBatch)}
