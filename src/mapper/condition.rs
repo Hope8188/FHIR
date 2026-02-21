@@ -9,7 +9,7 @@ use crate::kenyan::schema::KenyanPatient;
 /// ICD-11 MMS codes sourced from WHO ICD-11 2024-01 release.
 /// ICD-10 codes retained for backward-compat with systems not yet on ICD-11.
 /// Exposed pub(crate) so the SHA mapper can reuse the crosswalk.
-pub(crate) fn diagnosis_coding(
+pub fn diagnosis_coding(
     diagnosis: &str,
 ) -> Option<(&'static str, &'static str, &'static str, &'static str)> {
     let lower = diagnosis.to_lowercase();
