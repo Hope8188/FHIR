@@ -1159,26 +1159,26 @@ export default function Home() {
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-4 gap-4">
           {[
             {
-              title: "Tier 1: FHIR Parser",
-              desc: "CLI tool parsing FHIR R4 Patient, Observation, Encounter, Practitioner, Bundle resources. 5 tests passing.",
-              badge: "Complete",
+              title: "ICD-11 + ICD-10 Dual Coding",
+              desc: "Kenya DHA 2025 mandates ICD-11 MMS as primary. ICD-10 retained for backward-compat with KenyaEMR/older SHR. 12 diagnoses mapped.",
+              badge: "DHA 2025",
               color: "green" as const,
             },
             {
-              title: "Tier 2: Kenya Bridge",
-              desc: "Rust service transforming Kenyan clinic JSON/XML into valid FHIR R4 transaction bundles. 13 fields mapped.",
-              badge: "Active",
+              title: "AfyaLink SHR Compliance",
+              desc: "Encounter.class=OP · FID facility URI · HWR PUID Practitioner · SHA Coverage+Claim (preauthorization) · CR-SYNTH fallback.",
+              badge: "AfyaLink-Ready",
               color: "blue" as const,
             },
             {
-              title: "LOINC / BP Panel",
-              desc: "Temp: 8310-5 · BP panel: 85354-9 (systolic 8480-6 + diastolic 8462-2 as components) · Weight: 29463-7",
+              title: "LOINC Vitals Panel",
+              desc: "Temp: 8310-5 · BP panel: 85354-9 (systolic 8480-6 + diastolic 8462-2 as components) · Weight: 29463-7 · Pulse: 8867-4 · SpO2: 59408-5",
               badge: "R4 Spec",
               color: "yellow" as const,
             },
             {
-              title: "Secure Download",
-              desc: "HMAC-SHA256 signed bundles. Signature in X-Bundle-Signature header. No PHI in logs. timingSafeEqual verify.",
+              title: "Offline-First + Secure",
+              desc: "SQLite 7-day retry queue for rural facilities. HMAC-SHA256 signed downloads. Synthetic CR-ID fallback when AfyaLink UAT unreachable.",
               badge: "Signed",
               color: "purple" as const,
             },
