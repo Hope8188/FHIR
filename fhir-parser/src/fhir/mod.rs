@@ -1,9 +1,10 @@
-pub mod patient;
-pub mod encounter;
-pub mod condition;
-pub mod practitioner;
-pub mod organization;
-pub mod coverage;
-pub mod claim;
 pub mod bundle;
+pub mod claim;
+pub mod condition;
+pub mod coverage;
+pub mod encounter;
+pub mod medication_request;
 pub mod observation;
+pub mod organization;
+pub mod patient;
+pub mod practitioner;

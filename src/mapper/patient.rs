@@ -1,73 +1,92 @@
-use fhir_parser::fhir::patient::{Patient, Identifier, HumanName, ContactPoint, Address};
+use chrono::NaiveDate;
+use uuid::Uuid;
+
+use fhir_parser::fhir::patient::{Address, ContactPoint, HumanName, Identifier, Patient};
+
+use crate::cr_lookup::resolve_cr_id;
 use crate::kenyan::schema::KenyanPatient;
 
-/// Maps a KenyanPatient to a FHIR R4 Patient resource.
-///
-/// Identifier priority (AfyaLink 2025 spec):
-///   1. CR ID (Maisha Namba / Client Registry) — system: https://digitalhealth.go.ke/identifier/cr
-///   2. National ID — system: https://digitalhealth.go.ke/identifier/national-id
-pub fn map_patient(p: &KenyanPatient) -> Patient {
-    let mut identifiers = vec![];
+/// DNS namespace UUID for Kenya FHIR Bridge patient IDs.
+/// A private fixed UUID used as the namespace for UUID v5 derivation.
+const KENYA_PATIENT_NAMESPACE: Uuid =
+    uuid::uuid!("6ba7b810-9dad-11d1-80b4-00c04fd430c9"); // UUID DNS namespace
 
-    // Primary: CR ID (Maisha Namba) — if present from registry lookup
-    if let Some(cr) = &p.cr_id {
-        identifiers.push(Identifier {
-            system: Some("https://digitalhealth.go.ke/identifier/cr".to_string()),
-            value: cr.clone(),
-            r#use: Some("official".to_string()),
-        });
-    }
+/// Derive a stable UUID v5 from clinic_id + patient_number.
+/// This is deterministic (same input always produces same UUID) and spec-compliant.
+pub fn patient_uuid(clinic_id: &str, patient_number: &str) -> String {
+    let name = format!("{}:{}", clinic_id, patient_number);
+    Uuid::new_v5(&KENYA_PATIENT_NAMESPACE, name.as_bytes()).to_string()
+}
 
-    // National ID (secondary / fallback)
-    identifiers.push(Identifier {
-        system: Some("https://digitalhealth.go.ke/identifier/national-id".to_string()),
-        value: p.national_id.clone(),
-        r#use: if p.cr_id.is_some() {
-            Some("secondary".to_string())
-        } else {
-            Some("official".to_string())
-        },
-    });
+pub fn map_patient(kenyan: &KenyanPatient) -> Patient {
+    let id = patient_uuid(&kenyan.clinic_id, &kenyan.patient_number);
 
-    // Name parsing: "Firstname Lastname" → family + given
-    let name_parts: Vec<&str> = p.full_name.splitn(2, ' ').collect();
-    let (given, family) = if name_parts.len() == 2 {
-        (vec![name_parts[0].to_string()], name_parts[1].to_string())
-    } else {
-        (vec![p.full_name.clone()], String::new())
-    };
-
-    let telecom = p.phone.as_ref().map(|ph| {
-        vec![ContactPoint {
-            system: Some("phone".to_string()),
-            value: ph.clone(),
-            r#use: Some("mobile".to_string()),
-        }]
-    });
-
-    let address = p.county.as_ref().map(|county| {
-        vec![Address {
-            r#use: Some("home".to_string()),
-            text: None,
-            city: Some(county.clone()),
-            country: Some("KE".to_string()),
-        }]
-    });
+    // CR lookup: try live AfyaLink UAT, fall back to deterministic synthetic ID
+    let cr = resolve_cr_id(&kenyan.national_id);
 
     Patient {
         resource_type: "Patient".to_string(),
-        id: Some(format!("pat-{}", p.national_id)),
-        identifier: identifiers,
+        id: Some(id),
+        identifier: Some(vec![
+            // Primary: Client Registry ID (Maisha Namba / UPI)
+            // Live when AFYALINK_TOKEN is set, synthetic otherwise
+            Identifier {
+                system: Some("http://cr.dha.go.ke/fhir/Patient".to_string()),
+                value: cr.cr_id,
+            },
+            // National ID (secondary — retained for backward compat)
+            Identifier {
+                system: Some(
+                    "https://digitalhealth.go.ke/identifier/national-id".to_string(),
+                ),
+                value: kenyan.national_id.clone(),
+            },
+            Identifier {
+                system: Some(format!(
+                    "http://facility-registry.dha.go.ke/fhir/Location/{}/patient-number",
+                    kenyan.clinic_id
+                )),
+                value: kenyan.patient_number.clone(),
+            },
+        ]),
         name: Some(vec![HumanName {
-            r#use: Some("official".to_string()),
-            text: Some(p.full_name.clone()),
-            family: if family.is_empty() { None } else { Some(family) },
-            given: Some(given),
+            use_field: Some("official".to_string()),
+            family: Some(kenyan.names.last.clone()),
+            given: if kenyan.names.middle.is_empty() {
+                Some(vec![kenyan.names.first.clone()])
+            } else {
+                Some(vec![kenyan.names.first.clone(), kenyan.names.middle.clone()])
+            },
         }]),
-        gender: Some(p.gender.to_lowercase()),
-        birth_date: Some(p.date_of_birth.clone()),
-        telecom,
-        address,
-        active: Some(true),
+        telecom: if kenyan.phone.is_empty() {
+            None
+        } else {
+            Some(vec![ContactPoint {
+                system: Some("phone".to_string()),
+                value: kenyan.phone.clone(),
+                use_field: Some("mobile".to_string()),
+            }])
+        },
+        gender: Some(match kenyan.gender.as_str() {
+            "M" => "male",
+            "F" => "female",
+            _ => "unknown",
+        }
+        .to_string()),
+        birth_date: Some(kenyan.date_of_birth),
+        // Kenya: county is the administrative district level (Address.district per FHIR R4)
+        // subcounty goes in Address.line
+        address: Some(vec![Address {
+            line: Some(vec![kenyan.location.subcounty.clone()]),
+            city: None,
+            district: Some(kenyan.location.county.clone()),
+            state: None,
+            country: Some("KE".to_string()),
+        }]),
     }
 }
+
+pub fn parse_date(date: &str) -> NaiveDate {
+    NaiveDate::parse_from_str(date, "%Y-%m-%d").expect("invalid date format")
+}
+

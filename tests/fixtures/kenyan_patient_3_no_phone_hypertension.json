@@ -1,0 +1,29 @@
+{
+  "clinic_id": "KEN-MOMBASA-007",
+  "patient_number": "99901",
+  "national_id": "40023456",
+  "names": {
+    "first": "Fatuma",
+    "middle": "",
+    "last": "Hassan"
+  },
+  "gender": "F",
+  "date_of_birth": "1960-06-20",
+  "phone": "",
+  "location": {
+    "county": "Mombasa",
+    "subcounty": "Likoni"
+  },
+  "visit": {
+    "date": "2026-02-01",
+    "complaint": "Persistent headache and elevated blood pressure readings",
+    "vitals": {
+      "temperature_celsius": 36.8,
+      "bp_systolic": 160,
+      "bp_diastolic": 100,
+      "weight_kg": 88.0
+    },
+    "diagnosis": "Hypertension",
+    "treatment": "Amlodipine 5mg once daily"
+  }
+}

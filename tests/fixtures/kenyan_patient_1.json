@@ -1,0 +1,30 @@
+{
+  "clinic_id": "KEN-NAIROBI-001",
+  "patient_number": "12345",
+  "national_id": "27845612",
+  "names": {
+    "first": "Wanjiru",
+    "middle": "Njeri",
+    "last": "Kamau"
+  },
+  "gender": "F",
+  "date_of_birth": "1985-03-15",
+  "phone": "+254712345678",
+  "location": {
+    "county": "Nairobi",
+    "subcounty": "Westlands"
+  },
+  "visit": {
+    "date": "2026-02-15",
+    "complaint": "Fever and cough",
+    "vitals": {
+      "temperature_celsius": 38.5,
+      "bp_systolic": 120,
+      "bp_diastolic": 80,
+      "weight_kg": 65
+    },
+    "diagnosis": "Upper respiratory tract infection",
+    "treatment": "Amoxicillin 500mg TDS for 7 days"
+  }
+}
+

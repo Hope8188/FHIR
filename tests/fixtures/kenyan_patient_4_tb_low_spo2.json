@@ -1,0 +1,31 @@
+{
+  "clinic_id": "KEN-NAKURU-002",
+  "patient_number": "00501",
+  "national_id": "29876543",
+  "names": {
+    "first": "Chebet",
+    "middle": "Jelimo",
+    "last": "Rotich"
+  },
+  "gender": "F",
+  "date_of_birth": "2002-04-14",
+  "phone": "+254733000501",
+  "location": {
+    "county": "Nakuru",
+    "subcounty": "Nakuru East"
+  },
+  "visit": {
+    "date": "2026-02-18",
+    "complaint": "Productive cough for 3 weeks, night sweats and weight loss",
+    "vitals": {
+      "temperature_celsius": 37.8,
+      "bp_systolic": 100,
+      "bp_diastolic": 65,
+      "weight_kg": 47.3,
+      "pulse_rate": 95,
+      "o2_saturation": 94.5
+    },
+    "diagnosis": "Tuberculosis",
+    "treatment": "Refer to TB clinic for sputum GeneXpert and chest X-ray"
+  }
+}

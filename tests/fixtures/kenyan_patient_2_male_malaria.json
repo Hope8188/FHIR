@@ -1,0 +1,31 @@
+{
+  "clinic_id": "KEN-KISUMU-003",
+  "patient_number": "00042",
+  "national_id": "31456789",
+  "names": {
+    "first": "Otieno",
+    "middle": "",
+    "last": "Odhiambo"
+  },
+  "gender": "M",
+  "date_of_birth": "1973-11-02",
+  "phone": "+254722000042",
+  "location": {
+    "county": "Kisumu",
+    "subcounty": "Kisumu Central"
+  },
+  "visit": {
+    "date": "2026-01-10",
+    "complaint": "Fever, chills and headache",
+    "vitals": {
+      "temperature_celsius": 39.2,
+      "bp_systolic": 110,
+      "bp_diastolic": 70,
+      "weight_kg": 72.5,
+      "pulse_rate": 110,
+      "o2_saturation": 97.0
+    },
+    "diagnosis": "Malaria",
+    "treatment": "Artemether-Lumefantrine 80/480mg twice daily for 3 days"
+  }
+}

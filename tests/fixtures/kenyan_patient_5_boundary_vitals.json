@@ -1,0 +1,29 @@
+{
+  "clinic_id": "KEN-NAIROBI-001",
+  "patient_number": "00001",
+  "national_id": "10000001",
+  "names": {
+    "first": "Ali",
+    "middle": "",
+    "last": "Mwangi"
+  },
+  "gender": "M",
+  "date_of_birth": "1990-01-01",
+  "phone": "+254700000001",
+  "location": {
+    "county": "Nairobi",
+    "subcounty": "Eastleigh"
+  },
+  "visit": {
+    "date": "2026-02-20",
+    "complaint": "Routine check-up, no complaints",
+    "vitals": {
+      "temperature_celsius": 35.0,
+      "bp_systolic": 95,
+      "bp_diastolic": 60,
+      "weight_kg": 120.0
+    },
+    "diagnosis": "No acute illness noted",
+    "treatment": "None required"
+  }
+}

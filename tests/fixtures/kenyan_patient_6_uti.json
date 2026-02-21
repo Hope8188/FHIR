@@ -1,0 +1,30 @@
+{
+  "clinic_id": "KEN-ELDORET-005",
+  "patient_number": "77777",
+  "national_id": "35500077",
+  "names": {
+    "first": "Grace",
+    "middle": "Achieng",
+    "last": "Onyango"
+  },
+  "gender": "F",
+  "date_of_birth": "1985-07-30",
+  "phone": "+254711777777",
+  "location": {
+    "county": "Uasin Gishu",
+    "subcounty": "Turbo"
+  },
+  "visit": {
+    "date": "2026-02-10",
+    "complaint": "Burning sensation during urination and lower abdominal pain",
+    "vitals": {
+      "temperature_celsius": 37.5,
+      "bp_systolic": 118,
+      "bp_diastolic": 76,
+      "weight_kg": 61.0,
+      "pulse_rate": 82
+    },
+    "diagnosis": "Urinary tract infection",
+    "treatment": "Nitrofurantoin 100mg twice daily for 5 days"
+  }
+}

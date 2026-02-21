@@ -1,0 +1,190 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "address": [
+          {
+            "city": "Nairobi",
+            "country": "KE",
+            "line": [
+              "Westlands"
+            ]
+          }
+        ],
+        "birthDate": "1985-03-15",
+        "gender": "female",
+        "id": "KE-12345",
+        "identifier": [
+          {
+            "system": "http://kenya.go.ke/fhir/identifier/national-id",
+            "value": "27845612"
+          },
+          {
+            "system": "http://clinic.ke/KEN-NAIROBI-001/patient-number",
+            "value": "12345"
+          }
+        ],
+        "name": [
+          {
+            "family": "Kamau",
+            "given": [
+              "Wanjiru",
+              "Njeri"
+            ],
+            "use": "official"
+          }
+        ],
+        "resourceType": "Patient"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Patient/KE-12345"
+      }
+    },
+    {
+      "resource": {
+        "id": "enc-KE-12345",
+        "period": {
+          "end": null,
+          "start": "2026-02-15"
+        },
+        "resourceType": "Encounter",
+        "status": "finished",
+        "subject": {
+          "display": null,
+          "reference": "Patient/KE-12345"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Encounter/enc-KE-12345"
+      }
+    },
+    {
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "8310-5",
+              "display": "Body temperature",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Temperature"
+        },
+        "effectiveDateTime": "2026-02-15",
+        "id": "temp-KE-12345",
+        "resourceType": "Observation",
+        "status": "final",
+        "subject": {
+          "display": null,
+          "reference": "Patient/KE-12345"
+        },
+        "value": {
+          "system": "http://unitsofmeasure.org",
+          "unit": "Cel",
+          "value": 38.5
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/temp-KE-12345"
+      }
+    },
+    {
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "29463-7",
+              "display": "Body weight",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Weight"
+        },
+        "effectiveDateTime": "2026-02-15",
+        "id": "weight-KE-12345",
+        "resourceType": "Observation",
+        "status": "final",
+        "subject": {
+          "display": null,
+          "reference": "Patient/KE-12345"
+        },
+        "value": {
+          "system": "http://unitsofmeasure.org",
+          "unit": "kg",
+          "value": 65.0
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/weight-KE-12345"
+      }
+    },
+    {
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "8480-6",
+              "display": "Systolic blood pressure",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Systolic BP"
+        },
+        "effectiveDateTime": "2026-02-15",
+        "id": "bp-systolic-KE-12345",
+        "resourceType": "Observation",
+        "status": "final",
+        "subject": {
+          "display": null,
+          "reference": "Patient/KE-12345"
+        },
+        "value": {
+          "system": "http://unitsofmeasure.org",
+          "unit": "mm[Hg]",
+          "value": 120.0
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/bp-systolic-KE-12345"
+      }
+    },
+    {
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "8462-4",
+              "display": "Diastolic blood pressure",
+              "system": "http://loinc.org"
+            }
+          ],
+          "text": "Diastolic BP"
+        },
+        "effectiveDateTime": "2026-02-15",
+        "id": "bp-diastolic-KE-12345",
+        "resourceType": "Observation",
+        "status": "final",
+        "subject": {
+          "display": null,
+          "reference": "Patient/KE-12345"
+        },
+        "value": {
+          "system": "http://unitsofmeasure.org",
+          "unit": "mm[Hg]",
+          "value": 80.0
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/bp-diastolic-KE-12345"
+      }
+    }
+  ]
+}

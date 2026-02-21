@@ -1,36 +1,23 @@
-[workspace]
-members = [
-    "fhir-parser",
-    "."
-]
-resolver = "2"
-
 [package]
 name = "kenya-fhir-bridge"
 version = "0.1.0"
 edition = "2021"
 
-[[bin]]
-name = "kenya-fhir-bridge"
-path = "src/main.rs"
-
-[lib]
-name = "kenya_fhir_bridge"
-path = "src/lib.rs"
-
 [dependencies]
-fhir-parser = { path = "fhir-parser" }
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde-xml-rs = "0.6"
+anyhow = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
-uuid = { version = "1", features = ["v4"] }
+uuid = { version = "1.0", features = ["v4", "v5"] }
 rusqlite = { version = "0.31", features = ["bundled"] }
-tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
-clap = { version = "4", features = ["derive"] }
-anyhow = "1"
-sha2 = "0.10"
-hex = "0.4"
+
+# Reuse Tier 1 FHIR types
+fhir-parser = { path = "fhir-parser" }
+clap = { version = "4.5.59", features = ["derive"] }
 
 [dev-dependencies]
-pretty_assertions = "1"
+assert_cmd = "2.0"
+predicates = "3.1"
+tempfile = "3.10"
+
