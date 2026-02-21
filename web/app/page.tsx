@@ -19,9 +19,14 @@ const DEFAULT_KENYAN_JSON = {
       bp_systolic: 120,
       bp_diastolic: 80,
       weight_kg: 65,
+      pulse_rate: 88,
+      o2_saturation: 98.0,
     },
     diagnosis: "Upper respiratory tract infection",
     treatment: "Amoxicillin 500mg TDS for 7 days",
+    attending_puid: "HWR-KE-12345",
+    sha_member_number: "SHA/2024/001234",
+    sha_intervention_code: "SHA-OPD-001",
   },
 };
 
