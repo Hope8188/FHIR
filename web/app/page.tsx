@@ -1137,7 +1137,7 @@ export default function Home() {
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  FHIR R4 Bundle generated — POST to hapi.fhir.org/baseR4
+                  FHIR R4 Bundle generated — ready for AfyaLink SHR · use &quot;POST to AfyaLink&quot; below
                 </div>
               </div>
             )}
