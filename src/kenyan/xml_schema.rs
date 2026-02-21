@@ -1,5 +1,8 @@
 /// XML-native representation of a Kenyan clinic record.
 ///
+/// Supports all fields including optional attending_puid, sha_member_number,
+/// and sha_intervention_code introduced in AfyaLink 2025 compliance update.
+///
 /// Expected XML structure:
 /// ```xml
 /// <patient>
@@ -26,9 +29,16 @@
 ///       <bp_systolic>120</bp_systolic>
 ///       <bp_diastolic>80</bp_diastolic>
 ///       <weight_kg>65.0</weight_kg>
+///       <!-- optional: -->
+///       <pulse_rate>88</pulse_rate>
+///       <o2_saturation>98.0</o2_saturation>
 ///     </vitals>
 ///     <diagnosis>Upper respiratory tract infection</diagnosis>
 ///     <treatment>Amoxicillin 500mg TDS for 7 days</treatment>
+///     <!-- optional AfyaLink 2025 fields: -->
+///     <attending_puid>HWR-KE-12345</attending_puid>
+///     <sha_member_number>SHA/2024/001234</sha_member_number>
+///     <sha_intervention_code>SHA-OPD-001</sha_intervention_code>
 ///   </visit>
 /// </patient>
 /// ```
@@ -80,6 +90,12 @@ pub struct XmlVisit {
     pub vitals: XmlVitals,
     pub diagnosis: String,
     pub treatment: String,
+    /// HWR PUID of the attending clinician (AfyaLink 2025 — optional)
+    pub attending_puid: Option<String>,
+    /// SHA scheme member number (optional — cash visits omit this)
+    pub sha_member_number: Option<String>,
+    /// SHA intervention/CPT code (optional)
+    pub sha_intervention_code: Option<String>,
 }
 
 /// Convert the XML-deserialized struct into the canonical `KenyanPatient`,
@@ -119,6 +135,9 @@ pub fn xml_to_kenyan(x: XmlPatient) -> anyhow::Result<KenyanPatient> {
             },
             diagnosis: x.visit.diagnosis,
             treatment: x.visit.treatment,
+            attending_puid: x.visit.attending_puid,
+            sha_member_number: x.visit.sha_member_number,
+            sha_intervention_code: x.visit.sha_intervention_code,
         },
     })
 }
